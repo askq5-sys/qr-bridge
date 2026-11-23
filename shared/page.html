@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{app.title}}</title>
+<style>
+  body{font-family:sans-serif;margin:16px;background:#f4f4f4;color:#222}
+  h3{margin:0 0 10px}
+  textarea{width:100%;height:42vh;font-family:monospace;font-size:14px;
+           box-sizing:border-box;padding:8px;border-radius:8px;border:1px solid #bbb}
+  button{width:100%;padding:14px;margin-top:10px;font-size:17px;border:0;
+         border-radius:8px;background:#2e7d32;color:#fff}
+  button.alt{background:#1565c0}
+  button.gray{background:#666}
+  #st{margin-top:12px;min-height:1.3em;font-size:15px}
+</style>
+</head>
+<body>
+<!-- Ключи в двойных фигурных скобках и код доступа подставляет программа (тексты из strings.ini) -->
+<h3>{{app.title}}</h3>
+<textarea id="t" placeholder="{{page.placeholder}}" autocomplete="off"
+          autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+<button id="send">{{page.send}}</button>
+<button id="get" class="alt">{{page.get}}</button>
+<button id="copy" class="gray">{{page.copy}}</button>
+<div id="st"></div>
+<script>
+  const L = {
+    empty: "{{page.empty}}", sent: "{{page.sent}}", error: "{{page.error}}",
+    offline: "{{page.offline}}", pcEmpty: "{{page.pc_empty}}",
+    received: "{{page.received}}", copied: "{{page.copied}}", manual: "{{page.copy_manual}}"
+  };
+  const api = "/api/text?t=%TOKEN%";
+  const ta = document.getElementById("t");
+  const st = document.getElementById("st");
+  const say = m => { st.textContent = m; };
+  const withN = (s, n) => s.replace("{n}", n);
+
+  document.getElementById("send").onclick = async () => {
+    if (!ta.value) return say(L.empty);
+    try {
+      const r = await fetch(api, {method: "POST",
+        headers: {"Content-Type": "text/plain;charset=utf-8"}, body: ta.value});
+      say(r.ok ? withN(L.sent, ta.value.length) : L.error + " " + r.status);
+    } catch (e) { say(L.offline); }
+  };
+
+  document.getElementById("get").onclick = async () => {
+    try {
+      const r = await fetch(api, {cache: "no-store"});
+      if (!r.ok) return say(L.error + " " + r.status);
+      const v = await r.text();
+      if (!v) return say(L.pcEmpty);
+      ta.value = v;
+      say(withN(L.received, v.length));
+    } catch (e) { say(L.offline); }
+  };
+
+  document.getElementById("copy").onclick = () => {
+    ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    if (!ok && navigator.clipboard) {
+      navigator.clipboard.writeText(ta.value).then(() => say(L.copied), () => say(L.manual));
+      return;
+    }
+    say(ok ? L.copied : L.manual);
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=QR-мост
+Name[en]=QR Bridge
+Comment=Передача текста и ключей между компьютером и телефоном через QR
+Comment[en]=Send text between computer and phone via QR code
+Exec=qr-bridge
+Icon=qr-bridge
+Terminal=false
+Categories=Utility;Network;
+Keywords=qr;phone;proxy;key;vless;телефон;ключ;
+StartupWMClass=qr-bridge
