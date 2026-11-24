@@ -1,0 +1,18 @@
+Source: qr-bridge
+Section: utils
+Priority: optional
+Maintainer: askq5-sys <askq5-sys@users.noreply.github.com>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.6.0
+Homepage: https://github.com/askq5-sys/qr-bridge
+Rules-Requires-Root: no
+
+Package: qr-bridge
+Architecture: all
+Depends: ${misc:Depends}, python3 (>= 3.8), python3-gi, gir1.2-gtk-3.0
+Description: send text between computer and phone via QR code
+ QR Bridge shows text (for example, a proxy key) as a QR code to scan
+ with a phone, and receives text from the phone through a web page on
+ the local network. Nothing has to be installed on the phone.
+ .
+ The interface is available in English and Russian.

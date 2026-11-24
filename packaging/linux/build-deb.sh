@@ -20,8 +20,7 @@ install -m 755 "$ROOT/linux/qr_bridge.py" "$D/usr/lib/qr-bridge/qr_bridge.py"
 install -m 644 "$ROOT/packaging/linux/qr-bridge.desktop" "$D/usr/share/applications/"
 install -m 644 "$ROOT/shared/qr-bridge.svg" "$D/usr/share/icons/hicolor/scalable/apps/"
 install -m 644 "$ROOT/LICENSE" "$D/usr/share/doc/qr-bridge/copyright"
-printf '#!/bin/sh\nexec /usr/bin/python3 /usr/lib/qr-bridge/qr_bridge.py "$@"\n' > "$D/usr/bin/qr-bridge"
-chmod 755 "$D/usr/bin/qr-bridge"
+install -m 755 "$ROOT/packaging/linux/qr-bridge" "$D/usr/bin/qr-bridge"
 
 cat > "$D/DEBIAN/control" <<CTRL
 Package: qr-bridge

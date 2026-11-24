@@ -1,0 +1,7 @@
+linux/qr_bridge.py                  usr/lib/qr-bridge
+linux/qrbridge/*.py                 usr/lib/qr-bridge/qrbridge
+shared/page.html                    usr/lib/qr-bridge/qrbridge
+shared/strings.ini                  usr/lib/qr-bridge/qrbridge
+packaging/linux/qr-bridge           usr/bin
+packaging/linux/qr-bridge.desktop   usr/share/applications
+shared/qr-bridge.svg                usr/share/icons/hicolor/scalable/apps

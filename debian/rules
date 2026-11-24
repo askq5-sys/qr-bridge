@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+# Пакет без сборки: только раскладывает файлы (см. debian/install).
+
+%:
+	dh $@
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 755 debian/qr-bridge/usr/bin/qr-bridge debian/qr-bridge/usr/lib/qr-bridge/qr_bridge.py

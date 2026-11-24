@@ -30,6 +30,17 @@ sudo apt install ./qr-bridge_1.2.0_all.deb
 
 Нужны только `python3` и GTK 3 (`python3-gi`, `gir1.2-gtk-3.0`), которые уже есть в Linux Mint.
 
+**Или из PPA** (Ubuntu 22.04/24.04, Linux Mint 21/22): обновления приходят вместе с системными,
+а программа появляется в менеджере программ:
+
+```bash
+sudo add-apt-repository ppa:askq5-sys/qr-bridge
+sudo apt update
+sudo apt install qr-bridge
+```
+
+В Linux Mint можно добавить `ppa:askq5-sys/qr-bridge` и через «Источники приложений» → PPA.
+
 Запуск без установки: `python3 linux/qr_bridge.py`.
 
 ### Windows 10 / 11
@@ -85,7 +96,8 @@ windows/
   qr-bridge.ico
   src/             QrCode.cs, BridgeServer.cs, NetInfo.cs, I18n.cs, Settings.cs,
                    MainForm.cs, Program.cs
-packaging/linux/   build-deb.sh, qr-bridge.desktop
+packaging/linux/   build-deb.sh, ppa-upload.sh, qr-bridge.desktop, qr-bridge (запуск)
+debian/            исходный пакет для PPA на Launchpad
 tests/             python3 -m unittest discover -s tests
 ```
 
@@ -93,6 +105,12 @@ tests/             python3 -m unittest discover -s tests
 по отдельным классам. Страница для телефона и тексты интерфейса общие для обеих версий:
 в Windows они встраиваются в exe при сборке. Чтобы добавить язык, допишите раздел
 в `shared/strings.ini` и код языка в `LANGS` (i18n.py) и `Langs` (I18n.cs).
+
+### Публикация в PPA
+
+```bash
+sh packaging/linux/ppa-upload.sh <отпечаток ключа GPG>   # собирает для noble и jammy
+```
 
 ### Сборка .deb
 

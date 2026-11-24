@@ -33,6 +33,17 @@ sudo apt install ./qr-bridge_1.2.0_all.deb
 
 It only needs `python3` and GTK 3 (`python3-gi`, `gir1.2-gtk-3.0`), which come with Linux Mint.
 
+**Or from the PPA** (Ubuntu 22.04/24.04, Linux Mint 21/22) — updates arrive with system updates,
+and the app shows up in Software Manager:
+
+```bash
+sudo add-apt-repository ppa:askq5-sys/qr-bridge
+sudo apt update
+sudo apt install qr-bridge
+```
+
+In Linux Mint you can also add `ppa:askq5-sys/qr-bridge` in Software Sources → PPAs.
+
 Run without installing: `python3 linux/qr_bridge.py`.
 
 ### Windows 10 / 11
@@ -87,7 +98,8 @@ windows/
   qr-bridge.ico
   src/             QrCode.cs, BridgeServer.cs, NetInfo.cs, I18n.cs, Settings.cs,
                    MainForm.cs, Program.cs
-packaging/linux/   build-deb.sh, qr-bridge.desktop
+packaging/linux/   build-deb.sh, ppa-upload.sh, qr-bridge.desktop, qr-bridge (launcher)
+debian/            source package for Launchpad PPA
 tests/             python3 -m unittest discover -s tests
 ```
 
@@ -95,6 +107,12 @@ Both versions share the same structure: QR encoder, server, network addresses an
 are separate classes. The phone page and interface texts are shared; on Windows they are
 embedded into the exe at build time. To add a language, add a section to
 `shared/strings.ini` and the language code to `LANGS` (i18n.py) and `Langs` (I18n.cs).
+
+### Publishing to the PPA
+
+```bash
+sh packaging/linux/ppa-upload.sh <GPG key fingerprint>   # builds for noble and jammy
+```
 
 ### Building the .deb
 
